@@ -37,21 +37,23 @@ that doesn't need it.
 
 ## The 13 techniques
 
-| # | Technique | Category |
-|---|-----------|----------|
-| 1 | Zero-shot | baseline |
-| 2 | Few-shot (2 examples) | few-shot |
-| 3 | Few-shot (5 examples) | few-shot |
-| 4 | Chain-of-thought | reasoning |
-| 5 | Role prompting ("you are a compliance officer") | persona |
-| 6 | Role + chain-of-thought | combined |
-| 7 | Structured JSON (prompt-only) | structured |
-| 8 | Structured JSON (API-enforced schema) | structured |
-| 9 | Negative prompting | constraint |
-| 10 | Format constraints (exactly 5 bullets, <=20 words each) | constraint |
-| 11 | Self-consistency (3 internal drafts, reconciled) | reasoning |
-| 12 | Instruction in system role vs user role | structural |
-| 13 | Combined "kitchen sink" (role + few-shot + CoT + JSON schema + format limit) | combined |
+| # | Technique | Category | What it means |
+|---|-----------|----------|----------------|
+| 1 | Zero-shot | baseline | Just the plain instruction, no extra guidance - the model answers using only what it already knows how to do. |
+| 2 | Few-shot (2 examples) | few-shot | Shows 2 example input -> output pairs before the real task, so the model can copy the demonstrated pattern rather than infer it from the instruction alone. |
+| 3 | Few-shot (5 examples) | few-shot | Same idea with 5 examples instead of 2 - tests whether more examples helps, or just adds more chances for an inconsistent example to teach the wrong lesson. |
+| 4 | Chain-of-thought | reasoning | Asks the model to reason step-by-step before giving a final answer, instead of jumping straight to a conclusion. |
+| 5 | Role prompting ("you are a compliance officer") | persona | Gives the model a persona to set the lens it reads the task through - doesn't add facts, just framing. |
+| 6 | Role + chain-of-thought | combined | Technique 5 and technique 4 stacked together. |
+| 7 | Structured JSON (prompt-only) | structured | Asks, in plain text, for a specific JSON shape back - relies entirely on the model choosing to comply, nothing enforces it. |
+| 8 | Structured JSON (API-enforced schema) | structured | Same JSON shape as #7, but enforced by the Gemini API itself via a schema parameter, not just requested in words. |
+| 9 | Negative prompting | constraint | Tells the model what NOT to do (no boilerplate, no repeated risks, no invented risks) instead of only what to do. |
+| 10 | Format constraints (exactly 5 bullets, <=20 words each) | constraint | Specifies an exact output shape to force concise, predictable structure - no room for the model to decide how long is "enough." |
+| 11 | Self-consistency (3 internal drafts, reconciled) | reasoning | Asks the model to draft multiple independent answers within one response, then reconcile them - the idea being a risk that shows up in multiple drafts is more reliable than one that only appears once. |
+| 12 | Instruction in system role vs user role | structural | The exact same instruction as zero-shot, just sent through the API's "system" message slot instead of the "user" slot - isolates whether message placement itself changes anything. |
+| 13 | Combined "kitchen sink" (role + few-shot + CoT + JSON schema + format limit) | combined | Stacks role, examples, step-by-step reasoning, a JSON schema, and a format limit all into one prompt, to test whether combining techniques compounds their benefits or just adds complexity. |
+
+(Definitions above are mine, written for this project - see "Further reading" below for where the underlying technique names and ideas actually come from.)
 
 Full definitions, including the exact prompt text for each: `data/prompt_templates.csv`
 (loaded by `src/prompts.py`).
