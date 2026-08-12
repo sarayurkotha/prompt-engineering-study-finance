@@ -157,7 +157,7 @@ this separate from other Python projects on your machine)
 ```bash
 python -m venv venv
 venv\Scripts\activate        # Windows - on macOS/Linux use: source venv/bin/activate
-pip install google-genai python-dotenv pandas matplotlib
+pip install -r requirements.txt
 ```
 
 **3. Get a free API key** at [aistudio.google.com](https://aistudio.google.com)
@@ -191,6 +191,8 @@ any (technique, run) pair that already succeeded is skipped, not redone.
 ```
 README.md
 ARTICLE.md
+requirements.txt
+LICENSE
 .env                             (gitignored - you create this yourself)
 .env.example                     (checked in - shows the required variable name)
 data/
