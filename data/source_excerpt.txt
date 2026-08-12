@@ -1,0 +1,23 @@
+Source: JPMorgan Chase & Co., Form 10-K for fiscal year 2025, Item 1A. Risk Factors,
+"Cybersecurity and technology risk" section (page 22 of the filed PDF).
+Filed with the U.S. Securities and Exchange Commission, February 2026.
+https://www.jpmorganchase.com/content/dam/jpmc/jpmorgan-chase-and-co/investor-relations/documents/quarterly-earnings/2025/4th-quarter/corp-10k-2025.pdf
+
+---
+
+A successful cyber attack could cause significant harm to JPMorganChase and its clients and customers.
+
+JPMorganChase experiences numerous cyber attacks on its computer systems, software, networks and other technology assets. Cyber attacks could take many forms, and may be designed to:
+- introduce computer viruses or malicious code ("malware") into JPMorganChase's systems
+- obtain unauthorized access to JPMorganChase's systems or to confidential information belonging to JPMorganChase or its clients, customers, counterparties or employees
+- manipulate or destroy data
+- disrupt, sabotage or degrade service on JPMorganChase's systems and websites, including those that provide online banking and other services
+- steal money, or
+- extort money through the use of so-called "ransomware."
+
+Threat actors that perpetrate cyber attacks include individuals or groups that are:
+- sponsored by, or acting on behalf of, hostile countries or terrorist organizations
+- cyber-criminals, or
+- engaged in using technology to promote a political or social agenda (i.e., "hacktivists").
+
+JPMorganChase has experienced security breaches due to cyber attacks in the past, and future breaches are inevitable. Any such breach could result in serious and harmful consequences for JPMorganChase or its clients and customers.

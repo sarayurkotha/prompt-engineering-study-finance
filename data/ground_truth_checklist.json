@@ -1,0 +1,55 @@
+{
+  "_comment": "Manually built by reading data/source_excerpt.txt once. Each theme is something the source text actually says. Scoring checks whether a model's summary mentions each theme, matching any of its keyword variants (case-insensitive substring match).",
+  "themes": [
+    {
+      "id": "frequent_attacks",
+      "description": "Cyber attacks on systems/software/networks/technology assets are numerous and ongoing, not hypothetical",
+      "keywords": ["numerous cyber attack", "frequent cyber attack", "ongoing cyber attack", "regularly targeted", "experiences cyber attacks", "faces cyber attacks", "constant cyber"]
+    },
+    {
+      "id": "malware",
+      "description": "Malware / malicious code introduction",
+      "keywords": ["malware", "malicious code", "computer virus", "viruses"]
+    },
+    {
+      "id": "unauthorized_access",
+      "description": "Unauthorized access to systems or confidential information",
+      "keywords": ["unauthorized access", "confidential information", "data breach", "breach of confidential"]
+    },
+    {
+      "id": "data_manipulation",
+      "description": "Manipulation or destruction of data",
+      "keywords": ["manipulate", "manipulation of data", "destroy data", "destruction of data", "corrupt data", "alter data"]
+    },
+    {
+      "id": "service_disruption",
+      "description": "Disruption or sabotage of systems/websites, including online banking",
+      "keywords": ["disrupt", "sabotage", "degrade service", "service disruption", "online banking", "outage"]
+    },
+    {
+      "id": "theft_of_money",
+      "description": "Direct theft of money",
+      "keywords": ["steal money", "theft of money", "steal funds", "financial theft"]
+    },
+    {
+      "id": "ransomware",
+      "description": "Ransomware / extortion",
+      "keywords": ["ransomware", "extort", "extortion"]
+    },
+    {
+      "id": "threat_actors",
+      "description": "Categories of threat actors: nation-state/terrorist-sponsored, cyber-criminals, hacktivists",
+      "keywords": ["nation-state", "hostile countries", "terrorist", "cyber-criminal", "cybercriminal", "hacktivist", "threat actor"]
+    },
+    {
+      "id": "past_and_future_breaches",
+      "description": "Past breaches have occurred and future breaches are considered inevitable",
+      "keywords": ["inevitable", "past breaches", "experienced security breaches", "prior breaches", "history of breaches"]
+    },
+    {
+      "id": "serious_consequences",
+      "description": "Potential for serious/harmful consequences to the firm and its clients/customers",
+      "keywords": ["serious consequence", "harmful consequence", "significant harm", "material harm", "adverse impact", "material impact"]
+    }
+  ]
+}
