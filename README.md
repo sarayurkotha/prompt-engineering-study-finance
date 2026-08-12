@@ -144,10 +144,37 @@ That's it - no role, no examples, no format instructions. Exact definition:
 
 ## Reproducing this study
 
+**1. Clone the repo**
+
 ```bash
+git clone https://github.com/sarayurkotha/prompt-engineering-study-finance.git
+cd prompt-engineering-study-finance
+```
+
+**2. Install the dependencies** (a virtual environment is optional but keeps
+this separate from other Python projects on your machine)
+
+```bash
+python -m venv venv
+venv\Scripts\activate        # Windows - on macOS/Linux use: source venv/bin/activate
 pip install google-genai python-dotenv pandas matplotlib
-# 1. Get a free API key at https://aistudio.google.com (no credit card)
-# 2. Create a .env file in the project root: GEMINI_API_KEY=your-key-here
+```
+
+**3. Get a free API key** at [aistudio.google.com](https://aistudio.google.com)
+(Google account, no credit card, ~2 minutes).
+
+**4. Set up your `.env` file** - in the project root (not inside `src/`),
+create a file named exactly `.env` containing:
+
+```
+GEMINI_API_KEY=your-key-here
+```
+
+This file is gitignored - it stays on your machine and is never committed.
+
+**5. Run the scripts in order**, from inside `src/`:
+
+```bash
 cd src
 python run_study.py               # -> results/raw_runs.jsonl (65 API calls, ~4 min)
 python score_and_rank.py          # -> results/leaderboard.csv + outputs/*.png
