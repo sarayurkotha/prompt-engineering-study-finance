@@ -180,6 +180,4 @@ outputs/
   leaderboard.png
   score_breakdown.png
   prompt_anatomy_diagram.png
-notebooks/
-  prompt_study.ipynb
 ```
