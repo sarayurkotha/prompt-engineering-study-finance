@@ -164,13 +164,15 @@ pip install google-genai python-dotenv pandas matplotlib
 (Google account, no credit card, ~2 minutes).
 
 **4. Set up your `.env` file** - in the project root (not inside `src/`),
-create a file named exactly `.env` containing:
+copy the example file and fill in your own key:
 
-```
-GEMINI_API_KEY=your-key-here
+```bash
+cp .env.example .env
 ```
 
-This file is gitignored - it stays on your machine and is never committed.
+Then open `.env` and replace `your-key-here` with the key from step 3. `.env`
+is gitignored - it stays on your machine and is never committed; only
+`.env.example` (with a placeholder, not a real key) is checked in.
 
 **5. Run the scripts in order**, from inside `src/`:
 
@@ -190,6 +192,7 @@ any (technique, run) pair that already succeeded is skipped, not redone.
 README.md
 ARTICLE.md
 .env                             (gitignored - you create this yourself)
+.env.example                     (checked in - shows the required variable name)
 data/
   source_excerpt.txt
   ground_truth_checklist.json
