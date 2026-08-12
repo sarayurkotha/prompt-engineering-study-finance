@@ -53,7 +53,28 @@ that doesn't need it.
 | 12 | Instruction in system role vs user role | structural |
 | 13 | Combined "kitchen sink" (role + few-shot + CoT + JSON schema + format limit) | combined |
 
-Full definitions, including the exact prompt text for each: `src/prompts.py`.
+Full definitions, including the exact prompt text for each: `data/prompt_templates.csv`
+(loaded by `src/prompts.py`).
+
+**Further reading** - technique names and definitions aren't invented for this
+project; most are standard terms from prompt engineering practice:
+
+- Zero-shot, few-shot, chain-of-thought, role prompting, negative prompting,
+  and format constraints are all covered in
+  [promptingguide.ai](https://www.promptingguide.ai/), a widely-used reference
+  for prompt engineering techniques.
+- Self-consistency comes from Wang et al., ["Self-Consistency Improves Chain
+  of Thought Reasoning in Language Models"](https://arxiv.org/abs/2203.11171)
+  (2022) - technique 11 here is a simplified, single-call adaptation of that
+  idea (ask the model to draft multiple times *within* one response and
+  reconcile) rather than the paper's original method of sampling several
+  full, independent completions.
+- The system-vs-user role placement and API-enforced JSON schema techniques
+  (12 and 8) come from Google's own Gemini API documentation on
+  [system instructions](https://ai.google.dev/gemini-api/docs/text-generation#system-instructions)
+  and [structured output](https://ai.google.dev/gemini-api/docs/structured-output),
+  not general prompt-engineering theory - they're specific to how this
+  particular API is built.
 
 ## Scoring methodology
 
@@ -76,7 +97,7 @@ see how the ranking shifts.
 
 ```mermaid
 flowchart LR
-    A["13 techniques x 5 runs\nsrc/prompts.py"] -->|run_study.py| B["65 raw API responses\nresults/raw_runs.jsonl"]
+    A["13 prompts x 5 runs\ndata/prompt_templates.csv"] -->|run_study.py| B["65 raw API responses\nresults/raw_runs.jsonl"]
     B -->|score_and_rank.py| C["Checklist scoring\ncoverage / consistency / format"]
     C --> D["results/leaderboard.csv"]
     C --> E["outputs/leaderboard.png +\noutputs/score_breakdown.png"]
@@ -117,7 +138,7 @@ Summarise the key risks from the following section of an annual report.
 ```
 
 That's it - no role, no examples, no format instructions. Exact definition:
-`src/prompts.py`, technique id `zero_shot`.
+`data/prompt_templates.csv`, `technique_id` = `zero_shot`.
 
 ## Reproducing this study
 
@@ -143,6 +164,7 @@ ARTICLE.md
 data/
   source_excerpt.txt
   ground_truth_checklist.json
+  prompt_templates.csv          (the 13 prompts, plain text, open directly)
 src/
   prompts.py
   run_study.py

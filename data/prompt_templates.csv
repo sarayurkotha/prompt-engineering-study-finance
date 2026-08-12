@@ -1,0 +1,134 @@
+technique_id,name,category,system_instruction,user_content_template,uses_json_schema,format_type
+zero_shot,Zero-shot,baseline,,"Summarise the key risks from the following section of an annual report.
+
+{{EXCERPT}}",FALSE,bullets
+few_shot_2,Few-shot (2 examples),few-shot,,"Summarise the key risks from the following section of an annual report. Here are two examples of the task done well:
+
+Report excerpt:
+The Company's revenue is concentrated among a small number of large customers. The loss of any one of these customers, or a significant reduction in their purchasing, could materially reduce revenue. Additionally, the Company's supply chain relies on a single manufacturing partner in one country, exposing it to geopolitical and logistics disruption risk.
+
+Key risks:
+- Customer concentration risk: revenue depends on a small number of large customers
+- Supply chain risk: single manufacturing partner creates geopolitical/logistics exposure
+
+---
+
+Report excerpt:
+Fluctuations in foreign currency exchange rates could adversely affect reported results, as a significant portion of revenue is generated outside the Company's home currency. The Company is also subject to pending litigation related to a former product line, the outcome of which cannot be predicted and could result in material liabilities.
+
+Key risks:
+- FX risk: significant foreign-currency revenue exposes results to exchange rate swings
+- Litigation risk: pending lawsuit over a former product line could create material liabilities
+
+---
+
+Now do the same for this excerpt:
+{{EXCERPT}}",FALSE,bullets
+few_shot_5,Few-shot (5 examples),few-shot,,"Summarise the key risks from the following section of an annual report. Here are five examples of the task done well:
+
+Report excerpt:
+The Company's revenue is concentrated among a small number of large customers. The loss of any one of these customers, or a significant reduction in their purchasing, could materially reduce revenue. Additionally, the Company's supply chain relies on a single manufacturing partner in one country, exposing it to geopolitical and logistics disruption risk.
+
+Key risks:
+- Customer concentration risk: revenue depends on a small number of large customers
+- Supply chain risk: single manufacturing partner creates geopolitical/logistics exposure
+
+---
+
+Report excerpt:
+Fluctuations in foreign currency exchange rates could adversely affect reported results, as a significant portion of revenue is generated outside the Company's home currency. The Company is also subject to pending litigation related to a former product line, the outcome of which cannot be predicted and could result in material liabilities.
+
+Key risks:
+- FX risk: significant foreign-currency revenue exposes results to exchange rate swings
+- Litigation risk: pending lawsuit over a former product line could create material liabilities
+
+---
+
+Report excerpt:
+The Company depends on a small team of senior executives whose departure could disrupt strategy execution. It also faces increasing competition from well-capitalised new entrants and must continue investing in R&D to maintain its market position.
+
+Key risks:
+- Key person risk: dependence on a small senior executive team
+- Competitive risk: well-funded new entrants pressure market position and require sustained R&D investment
+
+---
+
+Report excerpt:
+A significant portion of the Company's assets are pledged as collateral under its credit facilities. A downgrade in credit rating could increase borrowing costs or trigger early repayment obligations, straining liquidity.
+
+Key risks:
+- Credit/liquidity risk: pledged assets and potential rating downgrade could raise costs or trigger early repayment
+
+---
+
+Report excerpt:
+The Company's products are subject to evolving data privacy regulations across multiple jurisdictions. Non-compliance could result in fines, and new legislation may require costly changes to how customer data is processed and stored.
+
+Key risks:
+- Regulatory/compliance risk: evolving multi-jurisdiction data privacy law creates fine and cost exposure
+
+---
+
+Now do the same for this excerpt:
+{{EXCERPT}}",FALSE,bullets
+chain_of_thought,Chain-of-thought,reasoning,,"Summarise the key risks from the following section of an annual report.
+
+{{EXCERPT}}
+
+Think step by step: first list every risk-related statement you notice verbatim, then group related statements into themes, then write the final summary as bullet points. Put ONLY the final bullet-point summary after a line that says exactly 'Final Summary:'.",FALSE,cot_bullets
+role_prompting,Role prompting,persona,"You are a compliance officer at a bank, reviewing risk disclosures for a client briefing.","Summarise the key risks from the following section of an annual report.
+
+{{EXCERPT}}",FALSE,bullets
+role_plus_cot,Role + chain-of-thought,combined,"You are a compliance officer at a bank, reviewing risk disclosures for a client briefing.","Summarise the key risks from the following section of an annual report.
+
+{{EXCERPT}}
+
+Think step by step: first list every risk-related statement you notice verbatim, then group related statements into themes, then write the final summary as bullet points. Put ONLY the final bullet-point summary after a line that says exactly 'Final Summary:'.",FALSE,cot_bullets
+structured_json_prompted,Structured JSON (prompt-only),structured,,"Summarise the key risks from the following section of an annual report.
+
+{{EXCERPT}}
+
+Respond with ONLY valid JSON in this exact shape, no other text: {""key_risks"": [""risk 1"", ""risk 2"", ...]}",FALSE,json
+structured_json_schema,Structured JSON (API-enforced schema),structured,,"Summarise the key risks from the following section of an annual report.
+
+{{EXCERPT}}",TRUE,json
+negative_prompting,Negative prompting,constraint,,"Summarise the key risks from the following section of an annual report.
+
+{{EXCERPT}}
+
+Do NOT include generic legal boilerplate or disclaimers. Do NOT repeat the same risk twice under different wording. Do NOT include any risk that is not explicitly stated in the text above.",FALSE,bullets
+format_constrained,"Format constraints (5 bullets, <=20 words)",constraint,,"Summarise the key risks from the following section of an annual report.
+
+{{EXCERPT}}
+
+Respond with EXACTLY 5 bullet points, each 20 words or fewer. No preamble, no closing remarks - only the 5 bullets.",FALSE,exact5_20w
+self_consistency,Self-consistency (internal 3-draft reconciliation),reasoning,,"Summarise the key risks from the following section of an annual report.
+
+{{EXCERPT}}
+
+First, independently draft three separate lists of key risks (label them Draft 1, Draft 2, Draft 3). Then compare the three drafts and keep only the risks that appear in at least two of them. Put ONLY that final reconciled bullet-point list after a line that says exactly 'Final Summary:'.",FALSE,cot_bullets
+system_vs_user_placement,Instruction in system role (vs user role),structural,Summarise the key risks from the following section of an annual report.,{{EXCERPT}},FALSE,bullets
+kitchen_sink,Combined (role + few-shot + CoT + JSON schema + format limit),combined,"You are a compliance officer at a bank, reviewing risk disclosures for a client briefing.","Summarise the key risks from the following section of an annual report. Here are two examples of the task done well:
+
+Report excerpt:
+The Company's revenue is concentrated among a small number of large customers. The loss of any one of these customers, or a significant reduction in their purchasing, could materially reduce revenue. Additionally, the Company's supply chain relies on a single manufacturing partner in one country, exposing it to geopolitical and logistics disruption risk.
+
+Key risks:
+- Customer concentration risk: revenue depends on a small number of large customers
+- Supply chain risk: single manufacturing partner creates geopolitical/logistics exposure
+
+---
+
+Report excerpt:
+Fluctuations in foreign currency exchange rates could adversely affect reported results, as a significant portion of revenue is generated outside the Company's home currency. The Company is also subject to pending litigation related to a former product line, the outcome of which cannot be predicted and could result in material liabilities.
+
+Key risks:
+- FX risk: significant foreign-currency revenue exposes results to exchange rate swings
+- Litigation risk: pending lawsuit over a former product line could create material liabilities
+
+---
+
+Now do the same for this excerpt:
+{{EXCERPT}}
+
+Think step by step first, then respond with ONLY valid JSON in this exact shape: {""key_risks"": [""risk 1"", ""risk 2"", ...]}. Include at most 5 risks, each under 20 words.",TRUE,json

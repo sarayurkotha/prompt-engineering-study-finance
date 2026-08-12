@@ -37,7 +37,7 @@ TEAL = "#087c7f"
 CORAL = "#ff6f61"
 TEAL_DARK = "#05363d"
 
-TECHNIQUES_BY_ID = {t.id: t for t in TECHNIQUES}
+TECHNIQUES_BY_ID = {t["technique_id"]: t for t in TECHNIQUES}
 
 
 def load_checklist() -> list[dict]:
@@ -64,13 +64,13 @@ def score_runs() -> pd.DataFrame:
             if row["error"]:
                 rows.append({**row, "coverage": 0.0, "format_ok": False, "matched": ""})
                 continue
-            scoring_text = technique.extract_for_scoring(row["raw_text"])
+            scoring_text = technique["extract_for_scoring"](row["raw_text"])
             matched = matched_themes(scoring_text, themes)
             rows.append(
                 {
                     **row,
                     "coverage": len(matched) / len(themes),
-                    "format_ok": technique.format_ok(row["raw_text"]),
+                    "format_ok": technique["format_ok"](row["raw_text"]),
                     "matched": ",".join(sorted(matched)),
                 }
             )
@@ -102,8 +102,8 @@ def build_leaderboard(scored: pd.DataFrame) -> pd.DataFrame:
         leaderboard_rows.append(
             {
                 "technique_id": technique_id,
-                "name": technique.name,
-                "category": technique.category,
+                "name": technique["name"],
+                "category": technique["category"],
                 "coverage": round(coverage, 3),
                 "consistency": round(consistency, 3),
                 "format_compliance": round(format_rate, 3),

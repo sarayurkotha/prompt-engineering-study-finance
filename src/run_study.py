@@ -27,7 +27,7 @@ from google import genai
 from google.genai import types
 from google.genai.errors import ClientError
 
-from prompts import TECHNIQUES
+from prompts import RISK_JSON_SCHEMA, TECHNIQUES, render_prompt
 
 load_dotenv()
 
@@ -57,20 +57,21 @@ def load_existing_successes() -> dict[tuple[str, int], dict]:
     return existing
 
 
-def call_gemini(client: genai.Client, technique, excerpt: str) -> tuple[str, float]:
+def call_gemini(client: genai.Client, technique: dict, excerpt: str) -> tuple[str, float]:
     config_kwargs = {}
-    if technique.system_instruction:
-        config_kwargs["system_instruction"] = technique.system_instruction
-    if technique.response_schema:
+    if technique["system_instruction"]:
+        config_kwargs["system_instruction"] = technique["system_instruction"]
+    if technique["uses_json_schema"]:
         config_kwargs["response_mime_type"] = "application/json"
-        config_kwargs["response_schema"] = technique.response_schema
+        config_kwargs["response_schema"] = RISK_JSON_SCHEMA
 
+    prompt = render_prompt(technique["user_content_template"], excerpt)
     for attempt in range(MAX_RETRIES):
         started = time.monotonic()
         try:
             response = client.models.generate_content(
                 model=MODEL,
-                contents=technique.user_content(excerpt),
+                contents=prompt,
                 config=types.GenerateContentConfig(**config_kwargs) if config_kwargs else None,
             )
             return response.text or "", time.monotonic() - started
@@ -91,7 +92,7 @@ def main() -> None:
 
     existing = load_existing_successes()
     all_pairs = [(t, r) for t in TECHNIQUES for r in range(N_RUNS)]
-    to_run = [(t, r) for t, r in all_pairs if (t.id, r) not in existing]
+    to_run = [(t, r) for t, r in all_pairs if (t["technique_id"], r) not in existing]
 
     print(f"{len(existing)} already succeeded, {len(to_run)} left to run.")
 
@@ -103,8 +104,8 @@ def main() -> None:
         except Exception as exc:  # API errors shouldn't kill the whole run
             raw_text, elapsed_s, error = "", 0.0, str(exc)
 
-        results_by_pair[(technique.id, run_index)] = {
-            "technique_id": technique.id,
+        results_by_pair[(technique["technique_id"], run_index)] = {
+            "technique_id": technique["technique_id"],
             "run_index": run_index,
             "raw_text": raw_text,
             "elapsed_s": round(elapsed_s, 2),
@@ -115,10 +116,10 @@ def main() -> None:
         # resumable state even if this process gets interrupted mid-run.
         with OUTPUT_PATH.open("w", encoding="utf-8") as out:
             for t, r in all_pairs:
-                if (t.id, r) in results_by_pair:
-                    out.write(json.dumps(results_by_pair[(t.id, r)]) + "\n")
+                if (t["technique_id"], r) in results_by_pair:
+                    out.write(json.dumps(results_by_pair[(t["technique_id"], r)]) + "\n")
 
-        print(f"[{i}/{len(to_run)}] {technique.id} run {run_index + 1}/{N_RUNS} "
+        print(f"[{i}/{len(to_run)}] {technique['technique_id']} run {run_index + 1}/{N_RUNS} "
               f"({'error: ' + error[:80] if error else f'{elapsed_s:.1f}s'})")
 
         if i < len(to_run):

@@ -113,7 +113,7 @@ Summarise the key risks from the following section of an annual report.
 
 That's the entire prompt. No system instruction, no persona, no examples, no
 format constraints - and it beat every technique that added any of those.
-Exact definition: `src/prompts.py`, technique id `zero_shot`.
+Exact definition: `data/prompt_templates.csv`, technique id `zero_shot`.
 
 ## What actually mattered
 
